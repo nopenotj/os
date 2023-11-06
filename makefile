@@ -1,5 +1,5 @@
 OUT := out
-all: ${OUT}/boot.bin
+all: os-image
 KERNEL_OFFSET := 0x1000
 
 # $@ is the target file
@@ -14,13 +14,16 @@ ${OUT}/boot.bin: boot/*.asm | ${OUT}
 
 
 ${OUT}/kernel.bin: ${OUT}/kernel_start.o ${OUT}/kernel.o
-	ld -o $@ -Ttext ${KERNEL_OFFSET} $^ --oformat binary
+	ld -m elf_i386 -o $@ -Ttext ${KERNEL_OFFSET}  $^ --oformat binary
+
+${OUT}/kernel.bin: ${OUT}/kernel.elf
+	objcopy -O binary $< $@
 
 ${OUT}/%.o: kernel/%.asm | ${OUT}
-	nasm $< -f elf64 -o $@
+	nasm $< -f elf -o $@
 
 ${OUT}/%.o: kernel/%.c | ${OUT}
-	gcc -ffreestanding -g -c $< -o $@
+	gcc -fno-pie -m32 -ffreestanding -g -c $< -o $@
 
 BINS := boot.bin kernel.bin
 os-image: $(BINS:%=${OUT}/%)
@@ -29,20 +32,22 @@ os-image: $(BINS:%=${OUT}/%)
 run: os-image
 	qemu-system-x86_64 os-image
 
+kernel.dis: out/kernel.bin
+	ndisasm -b 32 $<  > kernel.dis
+disassemble: kernel.dis
 
 ${OUT}/kernel.elf: ${OUT}/kernel_start.o ${OUT}/kernel.o
-	ld -o $@ -Ttext ${KERNEL_OFFSET} $^
+	ld -m elf_i386 -o $@ -Ttext ${KERNEL_OFFSET} $^
+
 
 debug: os-image ${OUT}/kernel.elf
 	qemu-system-x86_64 os-image -s -S &
 	gdb  \
-	-ex 'layout asm' \
 	-ex 'set disassembly-flavor intel' \
 	-ex 'target remote localhost:1234' \
 	-ex 'symbol-file ${OUT}/kernel.elf' \
-	-ex 'break *0x7c00' \
-	-ex 'break *${KERNEL_OFFSET}' \
 	-ex 'break main' \
+	-ex 'layout src' \
 	-ex 'continue'
 	pkill qemu
 clean:
