@@ -8,7 +8,7 @@ call print
 
 ; 2. Load the kernel into memory
 ; Read 2 sectors into 0x1000
-mov al, 2; no of sectors to read
+mov al, 5; no of sectors to read
 mov bx, 0x1000
 call load_sectors
 
