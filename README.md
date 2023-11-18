@@ -25,6 +25,11 @@ Valid boot sector is when last 2 bytes == 0xaa55. However since x86 is little en
 5. jump to KERNEL_OFFSET
 
 
+## Printing strings
+
+now i only have stack memory since I have not setup the data segment nor have I setup bss.
+
+
 ## Glossary
 
 ### Global Descriptor Table
@@ -37,8 +42,16 @@ We need to set it up before we can switch over to 32bit mode
 only BX can be used as an index register e.g. mov ax, [bx]
 https://stackoverflow.com/questions/1797765/assembly-invalid-effective-address
 
+-fno-pie https://stackoverflow.com/questions/47778099/what-is-no-pie-used-for
+
+
+cdel (c declaration) calling convention used.
+
+
+
 ## References
 
-Almost the entire project came from - https://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
+Starting point for the project - https://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
 Debugging - https://github.com/cfenollosa/os-tutorial/blob/master/14-checkpoint/Makefile
-Setting up IVT - https://web.archive.org/web/20160326064709/http://jamesmolloy.co.uk/tutorial_html/4.-The%20GDT%20and%20IDT.html 
+Setting up IVT - https://web.archive.org/web/20160326064709/http://jamesmolloy.co.uk/tutorial_html/4.-The%20GDT%20and%20IDT.html
+CRTC Registers (for cursor position) - http://www.osdever.net/FreeVGA/vga/crtcreg.htm
