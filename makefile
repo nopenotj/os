@@ -40,7 +40,7 @@ ${OUT}/kernel.elf: ${OUT}/kernel_start.o ${OUT}/kernel.o ${OUT}/io.o
 
 
 debug: os-image ${OUT}/kernel.elf
-	qemu-system-x86_64 os-image -s -S &
+	qemu-system-i386 os-image -s -S &
 	gdb  \
 	-ex 'set disassembly-flavor intel' \
 	-ex 'target remote localhost:1234' \
