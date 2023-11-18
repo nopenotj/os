@@ -1,15 +1,14 @@
 // add scrolling
 // IVT + capture keystrokes
-# include "io.h"
+#include "io.h"
+#include "types.h"
 
 
-# define CURSOR_LOC_HIGH_IDX 14
-# define CURSOR_LOC_LOW_IDX 15
-# define VGA_INDEX_PORT 0x3D4
-# define VGA_DATA_PORT VGA_INDEX_PORT + 1 // For read/write after setting index port
+#define CURSOR_LOC_HIGH_IDX 14
+#define CURSOR_LOC_LOW_IDX 15
+#define VGA_INDEX_PORT 0x3D4
+#define VGA_DATA_PORT VGA_INDEX_PORT + 1 // For read/write after setting index port
 
-typedef unsigned char uint_8;
-typedef unsigned short uint_16;
 
 void set_cursor(uint_16 pos) {
     outb(VGA_INDEX_PORT, CURSOR_LOC_HIGH_IDX);
