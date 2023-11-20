@@ -36,7 +36,7 @@ kernel.dis: out/kernel.bin
 disassemble: kernel.dis
 
 ${OUT}/kernel.elf: ${OUT}/kernel_start.o ${OUT}/kernel.o ${OUT}/io.o
-	ld -m elf_i386 -o $@ -Ttext ${KERNEL_OFFSET} $^ 
+	ld -m elf_i386 -o $@ -T link.ld $^ 
 
 
 debug: os-image ${OUT}/kernel.elf

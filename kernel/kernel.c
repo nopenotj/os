@@ -38,12 +38,11 @@ void write(char *buff) {
     set_cursor(s + i);
 }
 
+char str[] = "hello_world!!";
 void main() {
     set_cursor(0);
-    char str[] = "hello_world!!";
-    char space[] = " ";
     write(str);
-    write(space);
+    write(" ");
     write(str);
     
 }
