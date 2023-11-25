@@ -55,3 +55,5 @@ Starting point for the project - https://www.cs.bham.ac.uk/~exr/lectures/opsys/1
 Debugging - https://github.com/cfenollosa/os-tutorial/blob/master/14-checkpoint/Makefile
 Setting up IVT - https://web.archive.org/web/20160326064709/http://jamesmolloy.co.uk/tutorial_html/4.-The%20GDT%20and%20IDT.html
 CRTC Registers (for cursor position) - http://www.osdever.net/FreeVGA/vga/crtcreg.htm
+https://littleosbook.github.io/
+intel manual download from here -> https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
