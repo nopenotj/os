@@ -6,15 +6,18 @@
 mov bx, welcome_string
 call print
 
-; 2. Load the kernel into memory
+; 2. Enable the A20 gate to acces >1mb ram (http://kernelx.weebly.com/writing-a-bootsector.html)
+mov ax, 0x2401 ;Set the function number
+int 0x15 ;Call BIOS
+
+; 3. Load the kernel into memory
 ; Read 2 sectors into 0x1000
-mov al, 5; no of sectors to read
+mov al, 2; no of sectors to read
 mov bx, 0x1000
 call load_sectors
 
-; 3. Switch to protected Mode
+; 4. Switch to protected Mode
 call switch_to_pm
-
 jmp $
 
 
