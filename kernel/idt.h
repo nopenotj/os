@@ -3,7 +3,6 @@
 
 // From interrupt.asm
 void lidt(addr32 addr);
-void int_handler_0();
 
 struct idt_entry{
     uint_16 offset_low;
@@ -26,3 +25,8 @@ extern struct idtr_t idtr;
 void interrupt_handler(int err, int int_no);
 void set_idt(int i, addr32 fn);
 void setup_idt();
+
+
+// isrs
+void isr32();
+void isr33();

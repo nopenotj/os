@@ -1,6 +1,5 @@
 #include "io.h"
 #include "types.h"
-#include "port.h"
 
 
 #define CURSOR_LOC_HIGH_IDX 14
@@ -8,6 +7,11 @@
 #define VGA_INDEX_PORT 0x3D4
 #define VGA_DATA_PORT VGA_INDEX_PORT + 1 // For read/write after setting index port
 
+// https://wiki.osdev.org/Inline_Assembly/Examples#I.2FO_access
+void io_wait(void) {
+    // Do IO op on unused port to wait for a very small amt of time.
+    outb(0x80, 0);
+}
 
 void set_cursor(uint_16 pos) {
     outb(VGA_INDEX_PORT, CURSOR_LOC_HIGH_IDX);

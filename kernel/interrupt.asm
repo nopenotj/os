@@ -27,22 +27,28 @@ lidt:
 ; once we handled the errors, we can call iret which returns to cs:eip
 ; we must ensure that stack is still the same.
 [extern interrupt_handler]
-%macro noerr_int_handler 1
-global int_handler_%1
-int_handler_%1:
+; ISR => Interrupt Service Routine (https://wiki.osdev.org/Interrupt_Service_Routines)
+%macro noerr_isr 1
+global isr%1
+isr%1:
+    cli
     push 0
     push %1
     call interrupt_handler
     add esp, 8 ; reset stack
+    sti
     iret
 %endmacro
-%macro err_int_handler 1
-global int_handler_%1
-int_handler_%1:
+%macro err_isr 1
+global isr%1
+isr%1:
+    cli
     push %1
     call interrupt_handler
     add esp, 8 ; reset stack
+    sti
     iret
 %endmacro
 
-noerr_int_handler 0
+noerr_isr 32
+noerr_isr 33

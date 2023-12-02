@@ -3,6 +3,15 @@
 */ 
 #include "io.h"
 
+
+#define PIC1_OFFSET 32
+#define PIC2_OFFSET 40
+
+void setup_pic() {
+	PIC_remap(PIC1_OFFSET,PIC2_OFFSET);
+}
+
+
 #define PIC1		0x20		/* IO base address for master PIC */
 #define PIC2		0xA0		/* IO base address for slave PIC */
 #define PIC1_COMMAND	PIC1
@@ -14,9 +23,10 @@
  
 void PIC_sendEOI(unsigned char irq)
 {
-	if(irq >= 40)
+	if (irq < PIC1_OFFSET || irq > PIC2_OFFSET + 7) return;
+	
+	if(irq >= PIC2_OFFSET)
 		outb(PIC2_COMMAND,PIC_EOI);
- 
 	outb(PIC1_COMMAND,PIC_EOI);
 }
 
