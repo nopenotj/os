@@ -25,11 +25,6 @@ Valid boot sector is when last 2 bytes == 0xaa55. However since x86 is little en
 5. jump to KERNEL_OFFSET
 
 
-## Printing strings
-
-now i only have stack memory since I have not setup the data segment nor have I setup bss.
-
-
 ## Glossary
 
 ### Global Descriptor Table
